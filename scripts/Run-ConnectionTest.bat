@@ -5,22 +5,24 @@ title Server Connection Test
 echo.
 echo ========================================
 echo   Server Connection Test
-echo   تست ارتباط با سرور
+echo   Default server: 192.168.152.2
 echo ========================================
 echo.
 
-set /p SERVER=Enter server IP (مثلا 192.168.1.10): 
-if "%SERVER%"=="" (
-    echo Error: IP is required.
-    pause
-    exit /b 1
+set /p SERVER=Server IP [Enter = 192.168.152.2]: 
+if "%SERVER%"=="" set SERVER=192.168.152.2
+
+set /p CENTER=Center name (optional): 
+
+echo.
+echo Testing %SERVER% ...
+echo.
+
+if "%CENTER%"=="" (
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Test-ServerConnection.ps1" -Server "%SERVER%" -SaveLog
+) else (
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Test-ServerConnection.ps1" -Server "%SERVER%" -CenterName "%CENTER%" -SaveLog
 )
-
-echo.
-echo Testing connection to %SERVER% ...
-echo.
-
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0Test-ServerConnection.ps1" -Server "%SERVER%" -SaveLog
 
 echo.
 pause

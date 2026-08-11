@@ -6,8 +6,17 @@
 
 | فایل | کاربرد |
 |------|--------|
-| `Test-ServerConnection.ps1` | اسکریپت اصلی |
-| `Run-ConnectionTest.bat` | اجرای ساده با دابل‌کلیک |
+| `Test-ServerConnection.ps1` | اسکریپت اصلی (پیش‌فرض سرور: `192.168.152.2`) |
+| `Run-ConnectionTest-ForColleague.bat` | **برای همکار** — دابل‌کلیک، گزارش خودکار |
+| `Run-ConnectionTest.bat` | اجرای عمومی |
+| `راهنمای-همکار.txt` | دستورالعمل فارسی برای همکار |
+| `Reports/SEND-THIS-REPORT.txt` | گزارش آماده ارسال (بعد از اجرا) |
+
+## برای همکار (ارسال گزارش به مدیر IT)
+
+1. `Run-ConnectionTest-ForColleague.bat` را اجرا کند
+2. نام مرکز را وارد کند
+3. فایل `Reports/SEND-THIS-REPORT.txt` را بفرستد
 
 ## روش ۱: دابل‌کلیک (ساده)
 
