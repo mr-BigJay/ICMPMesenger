@@ -49,7 +49,7 @@ console.log('  Updated xxc/package.json → productName:', pkgOverrides.productN
 const langConfigSrc = path.join(brandingDir, 'lang-config.ts');
 const langConfigDst = path.join(xxcRoot, 'app/config/lang.ts');
 fs.copyFileSync(langConfigSrc, langConfigDst);
-console.log('  Updated app/config/lang.ts → DEFAULT: en');
+console.log('  Updated app/config/lang.ts → DEFAULT: fa-ir (Persian + English only)');
 
 // 3) English string overrides (branding labels)
 const enPath = path.join(xxcRoot, 'app/lang/en.json');
