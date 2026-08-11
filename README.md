@@ -1,6 +1,6 @@
 # ICMPMesenger / Jay Messenger
 
-Internal messenger project based on [XuanIM](https://github.com/xuanim/xuanim) (open source, AGPL-3.0).
+Internal messenger based on [mr-BigJay/xuanim](https://github.com/mr-BigJay/xuanim) fork (AGPL-3.0).
 
 ## For IT admin (you)
 
@@ -31,7 +31,7 @@ scripts/         PowerShell network test tools
 .github/         Windows installer build workflow
 ```
 
-Upstream XuanIM source is **not** stored in this repo (518MB). It is cloned during CI build.
+Source lives in your fork **mr-BigJay/xuanim** (~518MB). CI clones it during each build.
 
 ## Internal use only
 

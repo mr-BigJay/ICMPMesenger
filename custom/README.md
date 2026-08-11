@@ -1,7 +1,9 @@
 # Jay Messenger customizations
 
-This folder contains **your branding and settings** applied on top of the official
-[XuanIM open-source](https://github.com/xuanim/xuanim) client at build time.
+This folder contains **your branding and settings** applied on top of your fork
+[mr-BigJay/xuanim](https://github.com/mr-BigJay/xuanim) at build time.
+
+Edit UI/source in **your fork**; use `custom/branding/` here for extra patches (app name, labels).
 
 You do **not** need Node.js or Git on your PC. GitHub Actions builds the Windows
 installer for you.

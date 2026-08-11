@@ -24,11 +24,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Clone XuanIM upstream source
+      - name: Clone your XuanIM fork
         shell: pwsh
         run: |
-          git clone --depth 1 https://github.com/xuanim/xuanim.git xuanim-src
-          Write-Host "Cloned XuanIM into xuanim-src"
+          git clone --depth 1 https://github.com/mr-BigJay/xuanim.git xuanim-src
+          Write-Host "Cloned mr-BigJay/xuanim into xuanim-src"
 
       - name: Apply Jay Messenger customizations
         shell: pwsh
