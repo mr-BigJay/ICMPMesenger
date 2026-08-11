@@ -1,20 +1,19 @@
 @echo off
-chcp 65001 >nul
-title تست ارتباط با سرور - 192.168.152.2
+title Server Connection Test - 192.168.152.2
 
 echo.
 echo ========================================
-echo   تست ارتباط با سرور
+echo   Server Connection Test
 echo   Server: 192.168.152.2
 echo ========================================
 echo.
-echo این تست چند دقیقه طول می‌کشد. صبر کنید...
+echo This test takes a few minutes. Please wait...
 echo.
 
-set /p CENTER=نام مرکز را وارد کنید (مثلا مرکز 1): 
+set /p CENTER=Enter site/center name (e.g. Site-1): 
 
 echo.
-echo در حال تست...
+echo Running tests...
 echo.
 
 if "%CENTER%"=="" (
@@ -25,11 +24,10 @@ if "%CENTER%"=="" (
 
 echo.
 echo ========================================
-echo   تمام شد!
+echo   Done!
 echo.
-echo   پوشه Reports باز شد.
-echo   فایل SEND-THIS-REPORT.txt را برای
-echo   مدیر IT بفرستید (ایمیل / تلگرام / ...)
+echo   The Reports folder has opened.
+echo   Send SEND-THIS-REPORT.txt to IT admin.
 echo ========================================
 echo.
 pause

@@ -1,0 +1,32 @@
+Colleague instructions - Server connection test
+==============================================
+
+Server: 192.168.152.2
+
+Steps:
+------
+1. Open the NetworkTest folder on your desktop
+2. Double-click:
+
+   Run-ConnectionTest-ForColleague.bat
+
+3. When prompted, enter your site name (e.g. Site-1)
+4. Wait for the test to finish (2-5 minutes)
+5. The Reports folder will open
+6. Send SEND-THIS-REPORT.txt to your IT admin
+
+How to send the report:
+-----------------------
+- Email: attach the file
+- Chat/messaging: send the file
+- Any method agreed with IT admin
+
+If you get an error:
+--------------------
+Open PowerShell as Administrator and run:
+
+   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+
+Then run the .bat file again.
+
+Questions? Contact your IT admin.

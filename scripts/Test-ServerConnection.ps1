@@ -16,7 +16,7 @@
     .\Test-ServerConnection.ps1
 
 .EXAMPLE
-    .\Test-ServerConnection.ps1 -CenterName "مرکز 1" -SaveLog
+    .\Test-ServerConnection.ps1 -CenterName "Site-1" -SaveLog
 #>
 
 [CmdletBinding()]
@@ -77,7 +77,6 @@ $reportDir = Join-Path $scriptDir "Reports"
 
 Add-Report "=========================================="
 Add-Report "  SERVER CONNECTION TEST REPORT"
-Add-Report "  گزارش تست ارتباط با سرور"
 Add-Report "=========================================="
 Add-Report "Time       : $timestamp"
 Add-Report "Computer   : $computer"
@@ -88,7 +87,7 @@ Add-Report "Ports      : $($Ports -join ', ')"
 Add-Report "=========================================="
 
 Write-Host ""
-Write-Host "Server Connection Test / تست ارتباط با سرور" -ForegroundColor Yellow
+Write-Host "Server Connection Test" -ForegroundColor Yellow
 Write-Host "Time    : $timestamp"
 Write-Host "From    : $computer ($user)"
 if ($CenterName) { Write-Host "Center  : $CenterName" }
@@ -105,7 +104,7 @@ $summary = [ordered]@{
 }
 
 # --- 1. DNS ---
-Write-Section "1. Name resolution / تبدیل نام به IP"
+Write-Section "1. Name resolution"
 try {
     $resolved = [System.Net.Dns]::GetHostAddresses($Server) | Where-Object { $_.AddressFamily -eq 'InterNetwork' }
     if ($resolved) {
@@ -119,7 +118,7 @@ try {
 }
 
 # --- 2. Ping ---
-Write-Section "2. Ping (ICMP) / پینگ"
+Write-Section "2. Ping (ICMP)"
 $pingOk = $false
 try {
     $ping = New-Object System.Net.NetworkInformation.Ping
@@ -149,7 +148,7 @@ if ($pingCmd -match 'Average = (\d+)ms') {
 $summary.PingOk = $pingOk
 
 # --- 3. TCP ports ---
-Write-Section "3. TCP ports / پورت‌های TCP"
+Write-Section "3. TCP ports"
 $allPortsOk = $true
 foreach ($port in $Ports) {
     $portOk = $false
@@ -187,20 +186,19 @@ foreach ($port in $Ports) {
 }
 
 # --- 4. Traceroute ---
-Write-Section "4. Traceroute / مسیر شبکه"
+Write-Section "4. Traceroute"
 $tracertCmd = tracert -d -h 20 $Server 2>&1 | Out-String
 Write-Host $tracertCmd
 Add-Report "--- tracert output ---"
 Add-Report $tracertCmd.TrimEnd()
 
 # --- 5. Summary ---
-Write-Section "5. Summary / جمع‌بندی"
+Write-Section "5. Summary"
 
 $verdict = if ($allPortsOk) { "GOOD - Ready for messenger" } else { "PROBLEM - Fix network/firewall" }
-$verdictFa = if ($allPortsOk) { "خوب - آماده برای مسنجر" } else { "مشکل - شبکه/فایروال را بررسی کنید" }
 
 Add-Report ""
-Add-Report "--- FINAL SUMMARY / جمع‌بندی نهایی ---"
+Add-Report "--- FINAL SUMMARY ---"
 Add-Report "Ping OK          : $($summary.PingOk)"
 Add-Report "Packet loss      : $($summary.PingLoss)"
 Add-Report "Average latency  : $($summary.PingAvgMs)"
@@ -209,7 +207,6 @@ foreach ($port in $Ports) {
     Add-Report "Port $port         : $pStatus"
 }
 Add-Report "Overall          : $verdict"
-Add-Report "وضعیت کلی        : $verdictFa"
 Add-Report ""
 
 $summary.Overall = $allPortsOk
@@ -259,14 +256,11 @@ if ($SaveLog) {
 
     Write-Host ""
     Write-Host "========================================" -ForegroundColor Yellow
-    Write-Host "  REPORT SAVED / گزارش ذخیره شد" -ForegroundColor Yellow
+    Write-Host "  REPORT SAVED" -ForegroundColor Yellow
     Write-Host "========================================" -ForegroundColor Yellow
     Write-Host ""
-    Write-Host "  File for your manager:" -ForegroundColor Cyan
+    Write-Host "  Send this file to your IT admin:" -ForegroundColor Cyan
     Write-Host "  $latestFile" -ForegroundColor White
-    Write-Host ""
-    Write-Host "  Please send this file to your IT admin." -ForegroundColor Gray
-    Write-Host "  لطفاً این فایل را برای مدیر IT بفرستید." -ForegroundColor Gray
     Write-Host ""
 
     try {
