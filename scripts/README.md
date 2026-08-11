@@ -8,8 +8,10 @@ Default server: `192.168.152.2`
 
 | File | Purpose |
 |------|---------|
-| `Test-ServerConnection.ps1` | Main script |
-| `Run-ConnectionTest-ForColleague.bat` | **For colleagues** — one-click, auto report |
+| `Test-ServerConnection.ps1` | Full test (ping, ports, traceroute) |
+| `Test-XuanIM-Port.ps1` | **Quick test** — ping + Test-NetConnection 11444/11443/13911 |
+| `Run-Test-XuanIM-ForColleague.bat` | **For colleagues** — quick XuanIM port test, one-click |
+| `Run-ConnectionTest-ForColleague.bat` | Full connection test, one-click |
 | `Run-ConnectionTest.bat` | General launcher |
 | `COLLEAGUE-INSTRUCTIONS.txt` | Instructions for colleagues |
 | `Reports/SEND-THIS-REPORT.txt` | Report to send (created after run) |
