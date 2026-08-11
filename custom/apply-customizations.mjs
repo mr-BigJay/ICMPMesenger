@@ -34,6 +34,19 @@ function assertExists(dir, label) {
   }
 }
 
+function copyDirRecursive(srcDir, dstDir) {
+  fs.mkdirSync(dstDir, { recursive: true });
+  for (const entry of fs.readdirSync(srcDir, { withFileTypes: true })) {
+    const srcPath = path.join(srcDir, entry.name);
+    const dstPath = path.join(dstDir, entry.name);
+    if (entry.isDirectory()) {
+      copyDirRecursive(srcPath, dstPath);
+    } else {
+      fs.copyFileSync(srcPath, dstPath);
+    }
+  }
+}
+
 assertExists(xxcRoot, 'XuanIM client (xxc)');
 
 console.log('Applying customizations to:', xxcRoot);
@@ -58,7 +71,28 @@ const enOverrides = readJson(path.join(brandingDir, 'en-overrides.json'));
 writeJson(enPath, mergeJson(en, enOverrides));
 console.log('  Merged en-overrides.json into app/lang/en.json');
 
-// 4) Windows installer file name
+// 4) Persian language — fa-ir.json + client patches, remove Chinese
+const xxcPatchesDir = path.join(brandingDir, 'xxc-patches', 'app');
+if (fs.existsSync(xxcPatchesDir)) {
+  copyDirRecursive(xxcPatchesDir, path.join(xxcRoot, 'app'));
+  console.log('  Applied xxc-patches (fa-ir, constants, lang core, RTL)');
+}
+for (const removed of ['zh-cn.json', 'zh-tw.json']) {
+  const langFile = path.join(xxcRoot, 'app/lang', removed);
+  if (fs.existsSync(langFile)) {
+    fs.unlinkSync(langFile);
+    console.log('  Removed app/lang/' + removed);
+  }
+}
+const faPath = path.join(xxcRoot, 'app/lang/fa-ir.json');
+if (fs.existsSync(faPath)) {
+  const fa = readJson(faPath);
+  const faOverrides = readJson(path.join(brandingDir, 'fa-overrides.json'));
+  writeJson(faPath, mergeJson(fa, faOverrides));
+  console.log('  Merged fa-overrides.json into app/lang/fa-ir.json');
+}
+
+// 5) Windows installer file name
 const packageConfigPath = path.join(xxcRoot, 'build/package-config.json');
 if (fs.existsSync(packageConfigPath)) {
   const packageConfig = readJson(packageConfigPath);

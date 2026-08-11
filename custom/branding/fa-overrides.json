@@ -1,0 +1,11 @@
+{
+  "app.name": "Jay Messenger",
+  "app.companyName": "Internal IT",
+  "app.companyShortName": "Jay IT",
+  "login.title": "Jay Messenger",
+  "login.btn": "ورود",
+  "chat.send": "ارسال",
+  "chat.input.placeholder": "پیام بنویسید…",
+  "file.upload": "ارسال فایل",
+  "file.uploadLimitTip.format": "حداکثر حجم فایل: {0}"
+}
