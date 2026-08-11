@@ -1,0 +1,63 @@
+name: Build Jay Messenger (Windows)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'cursor/**'
+    paths:
+      - 'custom/**'
+      - '.github/workflows/build-jay-messenger-windows.yml'
+
+jobs:
+  build-windows-installer:
+    runs-on: windows-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout ICMPMesenger (customizations)
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Clone XuanIM upstream source
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/xuanim/xuanim.git xuanim-src
+          Write-Host "Cloned XuanIM into xuanim-src"
+
+      - name: Apply Jay Messenger customizations
+        shell: pwsh
+        run: node custom/apply-customizations.mjs
+
+      - name: Install dependencies
+        working-directory: xuanim-src/xxc
+        run: npm install
+
+      - name: Build client
+        working-directory: xuanim-src/xxc
+        run: npm run build
+
+      - name: Package Windows installer
+        working-directory: xuanim-src/xxc
+        run: npm run package-win
+
+      - name: List release output
+        shell: pwsh
+        working-directory: xuanim-src/xxc
+        run: |
+          Get-ChildItem -Path release -Recurse -Include *.exe,*.msi,*.zip | Format-Table FullName, Length
+
+      - name: Upload Windows installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: JayMessenger-Windows-Installer
+          path: |
+            xuanim-src/xxc/release/**/*.exe
+            xuanim-src/xxc/release/**/*.msi
+          if-no-files-found: error
+          retention-days: 30
